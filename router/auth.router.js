@@ -7,7 +7,7 @@ const {
     deleteUser,
     signup,
     login,
-} = require('../controller/usersController');
+} = require('../controller/user.controller');
 
 const {
     addUserValidators,

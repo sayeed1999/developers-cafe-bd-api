@@ -9,11 +9,12 @@ const cors = require('cors');
 
 // internal imports
 const { routeNotFoundHandler, errorHandler } = require('./middlewares/common/errorHandler');
+// const { jwtUnboxer } = require('./middlewares/common/rbacHandler');
 // importing routers
-const authRouter = require('./router/authRouter');
-const cafeRouter = require('./router/cafeRouter');
-const newsfeedRouter = require('./router/newsfeedRouter');
-const messengerRouter = require('./router/messengerRouter');
+const authRouter = require('./router/auth.router');
+const cafeRouter = require('./router/cafe.router');
+const newsfeedRouter = require('./router/newsfeed.router');
+const messengerRouter = require('./router/messenger.router');
 
 // initialize app & server
 const app = express();
@@ -56,11 +57,13 @@ app.use(cors(corsOptions));
 // routing setup
 app.use('/auth', authRouter);
 // app.use('/cafe', cafeRouter);
-// app.use('/newsfeed', newsfeedRouter);
+app.use('/newsfeed', newsfeedRouter);
 // app.use('/messenger', messengerRouter);
 
 // 404 - route not found error handler
 app.use(routeNotFoundHandler);
+
+// app.use(jwtUnboxer);
 
 // error handler
 app.use(errorHandler);

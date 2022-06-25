@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 
 // internal imports
-const User = require('../models/Person');
+const User = require('../models/Person.model');
 
 // get users page
 async function getUsers(req, res, next) {
     try {
       const users = await User.find();
-      res.render('users', {
+      res.status(200).json({
         users,
       });
     } catch (err) {
@@ -27,7 +27,7 @@ async function signup(req, res, next) {
         password: hashedPassword,
     });
 
-    console.log(newUser);
+    console.log('user created successfully - ', newUser);
 
     // save user or send error
     try {

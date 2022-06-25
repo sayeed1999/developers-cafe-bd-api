@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 const createError = require('http-errors');
 
 // internal imports
-const User = require('../../models/Person');
+const User = require('../../models/Person.model');
 
 // add user
 const addUserValidators = [
