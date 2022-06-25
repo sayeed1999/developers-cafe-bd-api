@@ -5,6 +5,9 @@ const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 
+// internal imports
+const { routeNotFoundHandler } = require('./middlewares/common/errorHandler');
+
 const app = express();
 dotenv.config();
 
@@ -23,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // set view engine
 app.set('view engine', 'ejs');
+
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,7 +35,11 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // routing setup
 
-// error handling
+// 404 - route not found error handler
+app.use(routeNotFoundHandler);
+
+// common error handler
+// app.use(defaultErrorHandler);
 
 app.listen(process.env.PORT, () => {
     console.log(`===> app listening to port ${process.env.PORT}`);
