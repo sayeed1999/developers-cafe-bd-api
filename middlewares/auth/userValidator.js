@@ -10,8 +10,8 @@ const addUserValidators = [
     check('username')
         .isLength({ min: 1 })
         .withMessage('Name is required')
-        .isAlpha('en-US', { ignore: '-' })
-        .withMessage('Username must not contain anything other than alphabet')
+        // .isAlpha('en-US', { ignore: '-' })
+        // .withMessage('Username must not contain anything other than alphabet')
         .trim(),
     check('email')
         .isEmail()
@@ -37,14 +37,16 @@ const addUserValidationHandler = (req, res, next) => {
     const errors = validationResult(req);
     const mappedErrors = errors.mapped();
     if (Object.keys(mappedErrors).length === 0) {
-        next();
-    } else {
-        // remove uploaded files if any
+        return next();
     }
 
-    // response the errors
-    res.status(500).json({
-        errors: mappedErrors,
+    let message = '';
+    Object.values(mappedErrors).forEach((x) => {
+        message += `${x.msg}. `;
+    });
+
+    res.status(400).json({
+        error: { message },
     });
 };
 

@@ -8,7 +8,9 @@ const routeNotFoundHandler = (req, res, next) => {
 // default error handler
 const errorHandler = (err, req, res, next) => {
     // override what you want
-    next(err);
+    res.status(400).json({
+        error: err,
+    });
 };
 
 module.exports = {

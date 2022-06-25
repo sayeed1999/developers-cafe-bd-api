@@ -27,11 +27,13 @@ async function signup(req, res, next) {
         password: hashedPassword,
     });
 
+    console.log(newUser);
+
     // save user or send error
     try {
       await newUser.save();
       res.status(200).json({
-        message: 'User was added successfully!',
+        message: 'Signed up successfully!',
       });
     } catch (err) {
       res.status(500).json({
@@ -78,7 +80,7 @@ async function login(req, res, next) {
         // prepare the user object to generate token
         const userObject = {
           userid: user._id,
-          username: user.name,
+          username: user.username,
           email: user.email,
           role: user.role || 'user',
         };
@@ -89,15 +91,14 @@ async function login(req, res, next) {
         });
 
         res.status(200).json({
-          body: {
             token,
-          },
+            user: userObject,
         });
       } else {
-        throw createError('Login failed! Please try again.');
+        throw createError(400, 'Login failed! Email & Password dont match.');
       }
     } else {
-      throw createError('Login failed! Please try again.');
+      throw createError(400, 'Login failed! Email & Password dont match.');
     }
   } catch (err) {
     next(err);

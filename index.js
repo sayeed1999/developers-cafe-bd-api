@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // set view engine
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -55,9 +55,9 @@ app.use(cors(corsOptions));
 
 // routing setup
 app.use('/auth', authRouter);
-app.use('/cafe', cafeRouter);
-app.use('/newsfeed', newsfeedRouter);
-app.use('/messenger', messengerRouter);
+// app.use('/cafe', cafeRouter);
+// app.use('/newsfeed', newsfeedRouter);
+// app.use('/messenger', messengerRouter);
 
 // 404 - route not found error handler
 app.use(routeNotFoundHandler);
