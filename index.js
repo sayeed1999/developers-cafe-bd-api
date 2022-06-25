@@ -1,15 +1,28 @@
+// external imports
 const express = require('express');
+const http = require('http');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // internal imports
-const { routeNotFoundHandler } = require('./middlewares/common/errorHandler');
+const { routeNotFoundHandler, errorHandler } = require('./middlewares/common/errorHandler');
+// importing routers
+const authRouter = require('./router/authRouter');
+const cafeRouter = require('./router/cafeRouter');
+const newsfeedRouter = require('./router/newsfeedRouter');
+const messengerRouter = require('./router/messengerRouter');
 
+// initialize app & server
 const app = express();
+const server = http.createServer(app);
 dotenv.config();
+
+// socket creation
+// const io = require("socket.io")(server);
+// global.io = io;
 
 // database connection
 mongoose
@@ -33,14 +46,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 // parse cookie
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// configuring cors
+const corsOptions = {
+    origin: ['http://localhost:3000', 'http://developers-cafe-bd.vercel.app'],
+    optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 // routing setup
+app.use('/auth', authRouter);
+app.use('/cafe', cafeRouter);
+app.use('/newsfeed', newsfeedRouter);
+app.use('/messenger', messengerRouter);
 
 // 404 - route not found error handler
 app.use(routeNotFoundHandler);
 
-// common error handler
-// app.use(defaultErrorHandler);
+// error handler
+app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     console.log(`===> app listening to port ${process.env.PORT}`);
 });

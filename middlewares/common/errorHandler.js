@@ -7,7 +7,7 @@ const routeNotFoundHandler = (req, res, next) => {
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
-    // logger here
+    // override what you want
     next(err);
 };
 
