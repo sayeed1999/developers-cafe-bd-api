@@ -88,11 +88,10 @@ async function login(req, res, next) {
           expiresIn: process.env.JWT_EXPIRY,
         });
 
-        // set cookie
-        res.cookie(process.env.COOKIE_NAME, token, {
-          maxAge: process.env.JWT_EXPIRY,
-          httpOnly: true,
-          signed: true,
+        res.status(200).json({
+          body: {
+            token,
+          },
         });
       } else {
         throw createError('Login failed! Please try again.');
