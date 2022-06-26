@@ -11,9 +11,12 @@ async function getAll(req, res, next) {
     }
 }
 
-async function getOne(req, res, next) {
+async function getById(req, res, next) {
     try {
         const data = await Post.findById(req.params.id);
+        if (data === null) {
+          throw createError(404, 'post not found!');
+        }
         res.status(200).json({
           data,
         });
@@ -22,19 +25,31 @@ async function getOne(req, res, next) {
     }
 }
 
-async function createOne(req, res, next) {
+async function insertOne(req, res, next) {
     try {
-        const datas = await Post.insertMany([req.body]);
+        const data = await Post.insertMany([req.body]);
         res.status(200).json({
-          datas,
+          data,
         });
     } catch (err) {
         next(err);
     }
 }
 
+async function findByIdAndUpdate(req, res, next) {
+  try {
+      const data = await Post.findByIdAndUpdate(req.params.id, req.body);
+      res.status(200).json({
+        data,
+      });
+  } catch (err) {
+      next(err);
+  }
+}
+
 module.exports = {
   getAll,
-  getOne,
-  createOne,
+  getById,
+  insertOne,
+  findByIdAndUpdate,
 };

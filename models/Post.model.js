@@ -27,6 +27,9 @@ const postSchema = mongoose.Schema(
     comments: {
         type: Array,
     },
+    likes: {
+      type: Array,
+    },
   },
   {
     timeStamps: true,

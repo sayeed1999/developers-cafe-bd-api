@@ -4,6 +4,7 @@ const express = require('express');
 // internal imports
 const {
     getUsers,
+    getById,
     deleteUser,
     signup,
     login,
@@ -21,7 +22,9 @@ const router = express.Router();
 // only admin routes
 router.get('/users', requireRole('admin'), getUsers);
 router.delete('/users/:id', requireRole('admin'), deleteUser);
+
 // general routes
+router.get('/users/:id', getById);
 router.post('/signup', addUserValidators, addUserValidationHandler, signup);
 router.post('/login', login);
 

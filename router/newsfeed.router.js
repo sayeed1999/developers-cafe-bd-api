@@ -2,14 +2,16 @@ const express = require('express');
 
 const {
     getAll,
-    getOne,
-    createOne,
+    getById,
+    insertOne,
+    findByIdAndUpdate,
 } = require('../controller/post.controller');
 
 const router = express.Router();
 
 router.get('/posts', getAll);
-router.get('/posts/:id', getOne);
-router.post('/posts', createOne);
+router.get('/posts/:id', getById);
+router.post('/posts', insertOne);
+router.put('/posts/:id', findByIdAndUpdate);
 
 module.exports = router;

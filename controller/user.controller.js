@@ -18,6 +18,21 @@ async function getUsers(req, res, next) {
     }
 }
 
+// get user by id
+async function getById(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user === null) {
+      throw createError(404, 'user not found!');
+    }
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 // add user
 async function signup(req, res, next) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -107,6 +122,7 @@ async function login(req, res, next) {
 
 module.exports = {
   getUsers,
+  getById,
   deleteUser,
   signup,
   login,
