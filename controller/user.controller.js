@@ -33,6 +33,24 @@ async function getById(req, res, next) {
   }
 }
 
+// get current user
+async function getCurrentUser(req, res, next) {
+  const { token } = req.body;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = {
+      userid: decoded.userid,
+      username: decoded.username,
+      email: decoded.email,
+    };
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 // add user
 async function signup(req, res, next) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -123,6 +141,7 @@ async function login(req, res, next) {
 module.exports = {
   getUsers,
   getById,
+  getCurrentUser,
   deleteUser,
   signup,
   login,

@@ -5,6 +5,7 @@ const express = require('express');
 const {
     getUsers,
     getById,
+    getCurrentUser,
     deleteUser,
     signup,
     login,
@@ -25,6 +26,7 @@ router.delete('/users/:id', requireRole('admin'), deleteUser);
 
 // general routes
 router.get('/users/:id', getById);
+router.post('/get-current-user', getCurrentUser);
 router.post('/signup', addUserValidators, addUserValidationHandler, signup);
 router.post('/login', login);
 

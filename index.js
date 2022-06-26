@@ -56,7 +56,7 @@ app.use(cors(corsOptions));
 
 // routing setup
 app.use('/auth', authRouter);
-// app.use('/cafe', cafeRouter);
+app.use('/cafe', cafeRouter);
 app.use('/newsfeed', newsfeedRouter);
 // app.use('/messenger', messengerRouter);
 
