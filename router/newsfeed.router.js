@@ -9,9 +9,9 @@ const {
 
 const router = express.Router();
 
-router.get('/posts', getAll);
-router.get('/posts/:id', getById);
-router.post('/posts', insertOne);
-router.put('/posts/:id', findByIdAndUpdate);
+router.get('/', getAll);
+router.get('/:id', getById);
+router.post('/', insertOne);
+router.put('/:id', findByIdAndUpdate);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Comment = require('./Comment.model');
+const { Comment, commentSchema } = require('./Comment.model');
 
 const postSchema = mongoose.Schema(
   {
@@ -25,10 +25,12 @@ const postSchema = mongoose.Schema(
         default: new Date(),
     },
     comments: {
-        type: Array,
+        type: [commentSchema],
+        default: [],
     },
     likes: {
       type: Array,
+      default: [],
     },
   },
   {

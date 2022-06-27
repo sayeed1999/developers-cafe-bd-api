@@ -14,6 +14,7 @@ const { routeNotFoundHandler, errorHandler } = require('./middlewares/common/err
 const authRouter = require('./router/auth.router');
 const cafeRouter = require('./router/cafe.router');
 const newsfeedRouter = require('./router/newsfeed.router');
+const commentRouter = require('./router/comment.router');
 const messengerRouter = require('./router/messenger.router');
 
 // initialize app & server
@@ -57,7 +58,8 @@ app.use(cors(corsOptions));
 // routing setup
 app.use('/auth', authRouter);
 app.use('/cafe', cafeRouter);
-app.use('/newsfeed', newsfeedRouter);
+app.use('/newsfeed/posts', newsfeedRouter);
+app.use('/newsfeed/posts/:postId/comments', commentRouter);
 // app.use('/messenger', messengerRouter);
 
 // 404 - route not found error handler
