@@ -50,7 +50,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // configuring cors
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://developers-cafe-bd.vercel.app'],
+    origin: ['http://localhost:3000', 'https://developers-cafe-bd.vercel.app'],
     optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
