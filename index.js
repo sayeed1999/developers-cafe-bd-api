@@ -9,7 +9,7 @@ const cors = require('cors');
 
 // internal imports
 const { routeNotFoundHandler, errorHandler } = require('./middlewares/common/errorHandler');
-// const { jwtUnboxer } = require('./middlewares/common/rbacHandler');
+const { setCurrentUser } = require('./middlewares/common/rbacHandler');
 // importing routers
 const authRouter = require('./router/auth.router');
 const cafeRouter = require('./router/cafe.router');
@@ -55,6 +55,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use(setCurrentUser);
+
 // routing setup
 app.use('/auth', authRouter);
 // app.use('/cafe/products', cafeRouter);
@@ -64,8 +66,6 @@ app.use('/newsfeed/posts/:postId/comments', commentRouter);
 
 // 404 - route not found error handler
 app.use(routeNotFoundHandler);
-
-// app.use(jwtUnboxer);
 
 // error handler
 app.use(errorHandler);

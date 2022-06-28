@@ -35,19 +35,16 @@ async function getById(req, res, next) {
 
 // get current user
 async function getCurrentUser(req, res, next) {
-  const { token } = req.body;
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = {
-      userid: decoded.userid,
-      username: decoded.username,
-      email: decoded.email,
-    };
+  // console.log(req.user); comes from setCurrentUser middleware
+
+  if (req.user) {
     res.status(200).json({
-      user,
+      user: req.user,
     });
-  } catch (err) {
-    next(err);
+  } else {
+    res.status(404).json({
+      user: null,
+    });
   }
 }
 
