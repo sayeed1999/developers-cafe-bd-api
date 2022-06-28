@@ -14,7 +14,7 @@ async function insertOne(req, res, next) {
             },
         });
         const modifiedPost = await Post.findById(postId);
-        res.status(201).json(modifiedPost);
+        res.status(201).json({ data: modifiedPost });
     } catch (err) {
         next(err);
     }
