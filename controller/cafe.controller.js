@@ -42,15 +42,39 @@ async function findByIdAndUpdate(req, res, next) {
 }
 
 async function giveProductRating(req, res, next) {
+  const { userid } = req.user;
+
   try {
     const productId = req.params.id;
     const { star } = req.body;
 
-    // const product = await Product.findById(productId);
-    // product.ratings.findIndex(x => x.id === )
+    // const response = await Product.updateOne({
+    //   _id: productId,
+    //   ratings: {
+    //     userid,
+    //   },
+    // }, {
+    //   $set: {
+    //     'ratings.star': star,
+    //   },
+    // });
+    // console.log(response);
+
+    const product = await Product.findById(productId);
+    const index = product.ratings.findIndex((x) => x.userid === userid);
+    if (index === -1) {
+      product.ratings.push({
+        userid,
+        star,
+      });
+    } else {
+      product.ratings[index].star = star;
+    }
+    const updated = await product.save();
+    // console.log(updated); // is this approach good?
 
     res.status(200).json({
-      data: null,
+      data: updated,
     });
   } catch (err) {
     next(err);

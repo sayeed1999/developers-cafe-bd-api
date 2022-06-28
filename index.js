@@ -59,7 +59,7 @@ app.use(setCurrentUser);
 
 // routing setup
 app.use('/auth', authRouter);
-// app.use('/cafe/products', cafeRouter);
+app.use('/cafe/products', cafeRouter);
 app.use('/newsfeed/posts', newsfeedRouter);
 app.use('/newsfeed/posts/:postId/comments', commentRouter);
 // app.use('/messenger', messengerRouter);
