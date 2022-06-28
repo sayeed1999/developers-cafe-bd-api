@@ -5,13 +5,15 @@ const {
     getById,
     insertOne,
     findByIdAndUpdate,
+    giveProductRating,
 } = require('../controller/cafe.controller');
 
 const router = express.Router();
 
-router.get('/products', getAll);
-router.get('/products/:id', getById);
-router.post('/products', insertOne);
-router.put('/products/:id', findByIdAndUpdate);
+router.get('/', getAll);
+router.get('/:id', getById);
+router.post('/', insertOne);
+router.put('/:id', findByIdAndUpdate);
+router.post('/:id/rating', giveProductRating);
 
 module.exports = router;

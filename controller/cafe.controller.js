@@ -41,9 +41,26 @@ async function findByIdAndUpdate(req, res, next) {
   }
 }
 
+async function giveProductRating(req, res, next) {
+  try {
+    const productId = req.params.id;
+    const { star } = req.body;
+
+    // const product = await Product.findById(productId);
+    // product.ratings.findIndex(x => x.id === )
+
+    res.status(200).json({
+      data: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   getAll,
   getById,
   insertOne,
   findByIdAndUpdate,
+  giveProductRating,
 };
