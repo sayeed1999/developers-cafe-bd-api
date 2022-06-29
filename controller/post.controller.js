@@ -4,7 +4,11 @@ const Post = require('../models/Post.model');
 
 async function getAll(req, res, next) {
     try {
-      const data = await Post.find();
+      const { size, page } = req.query; // query parameters
+      const data = await Post
+                          .find()
+                          .sort({ createdAt: -1 })
+                          .limit(size).skip(size * (page - 1));
       res.status(200).json({ data });
     } catch (err) {
       next(err);
