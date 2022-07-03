@@ -32,8 +32,14 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     })
-    .then(() => console.log('===> database successfully connected'))
-    .catch((err) => console.log(err));
+    .then(() => {
+        console.log('===> database successfully connected');
+    })
+    .catch((err) => {
+        console.log('===> db conn error: ', err.message);
+        console.log('===> fatal error: cannot start server due to db connection not established');
+        server.close();
+    });
 
 // request parser
 app.use(express.json());
@@ -70,6 +76,6 @@ app.use(routeNotFoundHandler);
 // error handler
 app.use(errorHandler);
 
-server.listen(process.env.PORT, () => {
-    console.log(`===> app listening to port ${process.env.PORT}`);
-});
+    server.listen(process.env.PORT, () => {
+        console.log(`===> app listening to port ${process.env.PORT}`);
+    });
