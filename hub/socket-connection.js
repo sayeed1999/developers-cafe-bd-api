@@ -10,7 +10,7 @@ const {
 const socketConnection = (server) => {
     const io = new Server(server, {
         cors: true,
-        origin: '*:*',
+        origin: ['http://localhost:3000', 'https://developers-cafe-bd.vercel.app'],
     });
 
     io.on('connection', (socket) => {
