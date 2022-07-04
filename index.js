@@ -38,9 +38,6 @@ mongoose
         server.close();
     });
 
-// web socket connection
-socketConnection(server);
-
 // request parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,6 +72,9 @@ app.use(routeNotFoundHandler);
 
 // error handler
 app.use(errorHandler);
+
+// web socket connection
+socketConnection(server);
 
 // listen to server
 server.listen(process.env.PORT, () => {

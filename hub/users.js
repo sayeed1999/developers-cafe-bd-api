@@ -4,8 +4,8 @@ const addUser = ({ id, name, room }) => { // returns  { error, user }
     const _name = name.trim().toLowerCase();
     const _room = room.trim().toLowerCase();
 
-    const existingUser = users.find((user) => user.name === _name && user.room === _room);
-    if (existingUser) { return { error: 'Username is taken' }; }
+    // a user may enter from mulitple devices at a time but id will be different..
+    const existingUser = users.find((user) => user.id === id && user.name === _name && user.room === _room);
 
     const user = { id, name: _name, room: _room };
     if (!existingUser) { users.push(user); }
