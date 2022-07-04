@@ -16,15 +16,13 @@ const cafeRouter = require('./router/cafe.router');
 const newsfeedRouter = require('./router/newsfeed.router');
 const commentRouter = require('./router/comment.router');
 const messengerRouter = require('./router/messenger.router');
+// hub method imports
+const socketConnection = require('./hub/socket-connection');
 
 // initialize app & server
 const app = express();
 const server = http.createServer(app);
 dotenv.config();
-
-// socket creation
-// const io = require("socket.io")(server);
-// global.io = io;
 
 // database connection
 mongoose
@@ -36,23 +34,16 @@ mongoose
         console.log('===> database successfully connected');
     })
     .catch((err) => {
-        console.log('===> db conn error: ', err.message);
-        console.log('===> fatal error: cannot start server due to db connection not established');
+        console.log('===> db connection error: ', err.message);
         server.close();
     });
+
+// web socket connection
+socketConnection(server);
 
 // request parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// set view engine
-// app.set('view engine', 'ejs');
-
-// set static folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// parse cookie
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // configuring cors
 const corsOptions = {
@@ -60,6 +51,15 @@ const corsOptions = {
     optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
+
+// set view engine
+// app.set('view engine', 'ejs');
+
+// set static folder
+// app.use(express.static(path.join(__dirname, 'public')));
+
+// parse cookie
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(setCurrentUser);
 
@@ -76,6 +76,7 @@ app.use(routeNotFoundHandler);
 // error handler
 app.use(errorHandler);
 
-    server.listen(process.env.PORT, () => {
-        console.log(`===> app listening to port ${process.env.PORT}`);
-    });
+// listen to server
+server.listen(process.env.PORT, () => {
+    console.log(`===> app listening to port ${process.env.PORT}`);
+});
