@@ -22,7 +22,9 @@ const socketConnection = (server) => {
             if (error) return callback(error);
             // joins a specific room!
             socket.join(user.room);
+            // broadcast to this client only
             socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
+            // broadcasts to every socket connections in the room but the sender
             socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined the chat!` });
 
             return callback();
@@ -31,7 +33,7 @@ const socketConnection = (server) => {
         socket.on('sendMessage', (message, callback) => {
             const { user, error } = getUser(socket.id);
             if (error) return callback(error);
-            // only broadcasts message to that room the user has joined on line no. 57!
+            // broadcast to every socket connections in the room
             io.to(user.room).emit('message', { user: user.name, text: message });
             return callback();
         });
@@ -40,8 +42,9 @@ const socketConnection = (server) => {
             socket.leave(room);
             const { user, error } = removeUser(socket.id);
             if (error) console.log(error);
+            // broadcasts to every socket connections in the room but the sender
             socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the chat!` });
-            console.log(`${user.name} had left!!`);
+            // console.log(`${user.name} had left!!`);
         });
     });
 };
