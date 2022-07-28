@@ -32,11 +32,10 @@ const getUsersInRoom = (room) => { // returns  { error, users }
     return { users: usersInRoom };
 };
 
-module.exports = {
+export {
     addUser,
     removeUser,
     getUser,
     getUsersInRoom,
 };
 
-export = {};

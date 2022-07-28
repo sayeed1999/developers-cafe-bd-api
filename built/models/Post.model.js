@@ -1,7 +1,11 @@
 "use strict";
-const mongoose = require('mongoose');
-const { Comment, commentSchema } = require('./Comment.model');
-const postSchema = mongoose.Schema({
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const Comment_model_1 = require("./Comment.model");
+const postSchema = new mongoose_1.default.Schema({
     userid: {
         type: String,
         required: true,
@@ -23,7 +27,7 @@ const postSchema = mongoose.Schema({
         default: new Date(),
     },
     comments: {
-        type: [commentSchema],
+        type: [Comment_model_1.commentSchema],
         default: [],
     },
     likes: {
@@ -31,9 +35,8 @@ const postSchema = mongoose.Schema({
         default: [],
     },
 }, {
-    timeStamps: true,
+    timestamps: true,
 });
-const Post = mongoose.model('Post', postSchema);
-module.exports = Post;
-module.exports = {};
+const Post = mongoose_1.default.model('Post', postSchema);
+exports.default = Post;
 //# sourceMappingURL=Post.model.js.map

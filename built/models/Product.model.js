@@ -1,6 +1,7 @@
 "use strict";
-const mongoose = require('mongoose');
-const productSchema = mongoose.Schema({
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
+const productSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
@@ -25,9 +26,8 @@ const productSchema = mongoose.Schema({
         type: Array,
     },
 }, {
-    timeStamps: true,
+    timestamps: true,
 });
-const Product = mongoose.model('Product', productSchema);
-module.exports = Product;
-module.exports = {};
+const Product = (0, mongoose_1.model)('Product', productSchema);
+exports.default = Product;
 //# sourceMappingURL=Product.model.js.map

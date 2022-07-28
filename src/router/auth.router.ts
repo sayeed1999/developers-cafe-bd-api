@@ -1,22 +1,22 @@
 // external imports
-const express = require('express');
+import express from 'express';
 
 // internal imports
-const {
+import {
     getUsers,
     getById,
     getCurrentUser,
     deleteUser,
     signup,
     login,
-} = require('../controllers/user.controller');
+} from '../controllers/user.controller';
 
-const {
+import {
     addUserValidators,
     addUserValidationHandler,
-} = require('../middlewares/auth/userValidator');
+} from '../middlewares/auth/userValidator';
 
-const { requireRole } = require('../middlewares/common/rbacHandler');
+import { requireRole } from '../middlewares/common/rbacHandler';
 
 const router = express.Router();
 
@@ -30,5 +30,4 @@ router.post('/get-current-user', getCurrentUser);
 router.post('/signup', addUserValidators, addUserValidationHandler, signup);
 router.post('/login', login);
 
-module.exports = router;
-export = {};
+export default router;

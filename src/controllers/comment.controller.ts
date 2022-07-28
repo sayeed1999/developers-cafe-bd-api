@@ -1,5 +1,5 @@
-const createError = require('http-errors');
-const Post = require('../models/Post.model');
+import createError from 'http-errors';
+import Post from '../models/Post.model';
 
 async function insertOne(req, res, next) {
     const fullUrl = req.originalUrl.split('/');
@@ -20,7 +20,7 @@ async function insertOne(req, res, next) {
     }
 }
 
-module.exports = {
+export {
     insertOne,
 };
-export = {};
+

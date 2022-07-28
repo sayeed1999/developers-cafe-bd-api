@@ -1,20 +1,26 @@
 "use strict";
-const createError = require('http-errors');
-const Product = require('../models/Product.model');
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.giveProductRating = exports.findByIdAndUpdate = exports.insertOne = exports.getById = exports.getAll = void 0;
+const http_errors_1 = __importDefault(require("http-errors"));
+const Product_model_1 = __importDefault(require("../models/Product.model"));
 async function getAll(req, res, next) {
     try {
-        const data = await Product.find();
+        const data = await Product_model_1.default.find();
         res.status(200).json({ data });
     }
     catch (err) {
         next(err);
     }
 }
+exports.getAll = getAll;
 async function getById(req, res, next) {
     try {
-        const data = await Product.findById(req.params.id);
+        const data = await Product_model_1.default.findById(req.params.id);
         if (data === null) {
-            throw createError(404, 'product not found!');
+            throw (0, http_errors_1.default)(404, 'product not found!');
         }
         res.status(200).json({ data });
     }
@@ -22,24 +28,27 @@ async function getById(req, res, next) {
         next(err);
     }
 }
+exports.getById = getById;
 async function insertOne(req, res, next) {
     try {
-        const data = await Product.insertMany([req.body]);
+        const data = await Product_model_1.default.insertMany([req.body]);
         res.status(200).json({ data });
     }
     catch (err) {
         next(err);
     }
 }
+exports.insertOne = insertOne;
 async function findByIdAndUpdate(req, res, next) {
     try {
-        const data = await Product.findByIdAndUpdate(req.params.id, req.body);
+        const data = await Product_model_1.default.findByIdAndUpdate(req.params.id, req.body);
         res.status(200).json({ data });
     }
     catch (err) {
         next(err);
     }
 }
+exports.findByIdAndUpdate = findByIdAndUpdate;
 async function giveProductRating(req, res, next) {
     const { userid } = req.user;
     try {
@@ -56,7 +65,7 @@ async function giveProductRating(req, res, next) {
         //   },
         // });
         // console.log(response);
-        const product = await Product.findById(productId);
+        const product = await Product_model_1.default.findById(productId);
         const index = product.ratings.findIndex((x) => x.userid === userid);
         if (index === -1) {
             product.ratings.push({
@@ -77,12 +86,5 @@ async function giveProductRating(req, res, next) {
         next(err);
     }
 }
-module.exports = {
-    getAll,
-    getById,
-    insertOne,
-    findByIdAndUpdate,
-    giveProductRating,
-};
-module.exports = {};
+exports.giveProductRating = giveProductRating;
 //# sourceMappingURL=cafe.controller.js.map

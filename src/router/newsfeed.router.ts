@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const {
+import {
     getAll,
     getById,
     insertOne,
     findByIdAndUpdate,
-} = require('../controllers/post.controller');
+} from '../controllers/post.controller';
 
 const router = express.Router();
 
@@ -14,5 +14,4 @@ router.get('/:id', getById);
 router.post('/', insertOne);
 router.put('/:id', findByIdAndUpdate);
 
-module.exports = router;
-export = {};
+export default router;

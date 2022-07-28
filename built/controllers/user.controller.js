@@ -1,15 +1,20 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.login = exports.signup = exports.deleteUser = exports.getCurrentUser = exports.getById = exports.getUsers = void 0;
 // external imports
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const createError = require('http-errors');
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const http_errors_1 = __importDefault(require("http-errors"));
 // internal imports
-const User = require('../models/Person.model');
-const { config } = require('../config');
+const Person_model_1 = __importDefault(require("../models/Person.model"));
+const config_1 = __importDefault(require("../config"));
 // get users page
 async function getUsers(req, res, next) {
     try {
-        const users = await User.find();
+        const users = await Person_model_1.default.find();
         res.status(200).json({
             users,
         });
@@ -18,12 +23,13 @@ async function getUsers(req, res, next) {
         next(err);
     }
 }
+exports.getUsers = getUsers;
 // get user by id
 async function getById(req, res, next) {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await Person_model_1.default.findById(req.params.id);
         if (user === null) {
-            throw createError(404, 'user not found!');
+            throw (0, http_errors_1.default)(404, 'user not found!');
         }
         res.status(200).json({
             user,
@@ -33,6 +39,7 @@ async function getById(req, res, next) {
         next(err);
     }
 }
+exports.getById = getById;
 // get current user
 async function getCurrentUser(req, res, next) {
     // console.log(req.user); comes from setCurrentUser middleware
@@ -47,10 +54,11 @@ async function getCurrentUser(req, res, next) {
         });
     }
 }
+exports.getCurrentUser = getCurrentUser;
 // add user
 async function signup(req, res, next) {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newUser = new User({
+    const hashedPassword = await bcrypt_1.default.hash(req.body.password, 10);
+    const newUser = new Person_model_1.default({
         ...req.body,
         password: hashedPassword,
     });
@@ -70,10 +78,11 @@ async function signup(req, res, next) {
         });
     }
 }
+exports.signup = signup;
 // delete user
 async function deleteUser(req, res, next) {
     try {
-        await User.findByIdAndDelete({
+        await Person_model_1.default.findByIdAndDelete({
             _id: req.params.id,
         });
         res.status(200).json({
@@ -90,12 +99,13 @@ async function deleteUser(req, res, next) {
         });
     }
 }
+exports.deleteUser = deleteUser;
 // login user
 async function login(req, res, next) {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await Person_model_1.default.findOne({ email: req.body.email });
         if (user && user._id) {
-            const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+            const isValidPassword = await bcrypt_1.default.compare(req.body.password, user.password);
             if (isValidPassword) {
                 // prepare the user object to generate token
                 const userObject = {
@@ -105,8 +115,8 @@ async function login(req, res, next) {
                     role: user.role || 'user',
                 };
                 // generate token
-                const token = jwt.sign(userObject, config.jwt.secret, {
-                    expiresIn: config.jwt.expiry,
+                const token = jsonwebtoken_1.default.sign(userObject, config_1.default.jwt.secret, {
+                    expiresIn: config_1.default.jwt.expiry,
                 });
                 res.status(200).json({
                     token,
@@ -114,24 +124,16 @@ async function login(req, res, next) {
                 });
             }
             else {
-                throw createError(400, 'Login failed! Email & Password dont match.');
+                throw (0, http_errors_1.default)(400, 'Login failed! Email & Password dont match.');
             }
         }
         else {
-            throw createError(400, 'Login failed! Email & Password dont match.');
+            throw (0, http_errors_1.default)(400, 'Login failed! Email & Password dont match.');
         }
     }
     catch (err) {
         next(err);
     }
 }
-module.exports = {
-    getUsers,
-    getById,
-    getCurrentUser,
-    deleteUser,
-    signup,
-    login,
-};
-module.exports = {};
+exports.login = login;
 //# sourceMappingURL=user.controller.js.map

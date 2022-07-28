@@ -1,9 +1,9 @@
 // external imports
-const { check, validationResult } = require('express-validator');
-const createError = require('http-errors');
+import { check, validationResult } from 'express-validator';
+import createError from 'http-errors';
 
 // internal imports
-const User = require('../../models/Person.model');
+import User from '../../models/Person.model';
 
 // add user
 const addUserValidators = [
@@ -50,9 +50,7 @@ const addUserValidationHandler = (req, res, next) => {
     });
 };
 
-module.exports = {
+export {
     addUserValidators,
     addUserValidationHandler,
 };
-
-export = {};

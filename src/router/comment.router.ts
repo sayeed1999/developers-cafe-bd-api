@@ -1,12 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const {
+import {
     insertOne,
-} = require('../controllers/comment.controller');
+} from '../controllers/comment.controller';
 
 const router = express.Router();
 
 router.post('/', insertOne);
 
-module.exports = router;
-export = {};
+export default router;

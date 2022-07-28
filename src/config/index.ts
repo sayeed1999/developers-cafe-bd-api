@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
 const envFound = dotenv.config();
 if (envFound.error) {
@@ -24,5 +24,6 @@ const config = {
     },
 };
 
-module.exports = config;
-export = {};
+export default config;
+// export default config;
+// ;

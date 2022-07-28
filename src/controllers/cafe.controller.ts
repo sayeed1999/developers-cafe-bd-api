@@ -1,6 +1,6 @@
-const createError = require('http-errors');
+import createError from 'http-errors';
 
-const Product = require('../models/Product.model');
+import Product from '../models/Product.model';
 
 async function getAll(req, res, next) {
     try {
@@ -81,11 +81,10 @@ async function giveProductRating(req, res, next) {
   }
 }
 
-module.exports = {
+export {
   getAll,
   getById,
   insertOne,
   findByIdAndUpdate,
   giveProductRating,
 };
-export = {};

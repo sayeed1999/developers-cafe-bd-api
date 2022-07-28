@@ -1,39 +1,45 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.addUserValidationHandler = exports.addUserValidators = void 0;
 // external imports
-const { check, validationResult } = require('express-validator');
-const createError = require('http-errors');
+const express_validator_1 = require("express-validator");
+const http_errors_1 = __importDefault(require("http-errors"));
 // internal imports
-const User = require('../../models/Person.model');
+const Person_model_1 = __importDefault(require("../../models/Person.model"));
 // add user
 const addUserValidators = [
-    check('username')
+    (0, express_validator_1.check)('username')
         .isLength({ min: 1 })
         .withMessage('Name is required')
         // .isAlpha('en-US', { ignore: '-' })
         // .withMessage('Username must not contain anything other than alphabet')
         .trim(),
-    check('email')
+    (0, express_validator_1.check)('email')
         .isEmail()
         .withMessage('Invalid email address')
         .trim()
         .custom(async (value) => {
         try {
-            const user = await User.findOne({ email: value });
+            const user = await Person_model_1.default.findOne({ email: value });
             if (user) {
-                throw createError('Email is already in use!');
+                throw (0, http_errors_1.default)('Email is already in use!');
             }
         }
         catch (err) {
-            throw createError(err.message);
+            throw (0, http_errors_1.default)(err.message);
         }
     }),
-    check('password')
+    (0, express_validator_1.check)('password')
         // .isStrongPassword()
         .isLength({ min: 6 })
         .withMessage('Password must be atleast 6 characters long'),
 ];
+exports.addUserValidators = addUserValidators;
 const addUserValidationHandler = (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = (0, express_validator_1.validationResult)(req);
     const mappedErrors = errors.mapped();
     if (Object.keys(mappedErrors).length === 0) {
         return next();
@@ -46,9 +52,5 @@ const addUserValidationHandler = (req, res, next) => {
         error: { message },
     });
 };
-module.exports = {
-    addUserValidators,
-    addUserValidationHandler,
-};
-module.exports = {};
+exports.addUserValidationHandler = addUserValidationHandler;
 //# sourceMappingURL=userValidator.js.map

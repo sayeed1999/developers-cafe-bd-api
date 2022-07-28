@@ -1,11 +1,11 @@
 // external imports
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const createError = require('http-errors');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import createError from 'http-errors';
 
 // internal imports
-const User = require('../models/Person.model');
-const { config } = require('../config');
+import User from '../models/Person.model';
+import config from '../config';
 
 // get users page
 async function getUsers(req, res, next) {
@@ -136,7 +136,7 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = {
+export {
   getUsers,
   getById,
   getCurrentUser,
@@ -144,4 +144,3 @@ module.exports = {
   signup,
   login,
 };
-export = {};

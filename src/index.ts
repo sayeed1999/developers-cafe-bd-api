@@ -1,24 +1,24 @@
 // external imports
-const express = require('express');
-const http = require('http');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+import express from 'express';
+import http from 'http';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // internal imports
-const config = require('./config');
-const { routeNotFoundHandler, errorHandler } = require('./middlewares/common/errorHandler');
-const { setCurrentUser } = require('./middlewares/common/rbacHandler');
+import config from './config';
+import { routeNotFoundHandler, errorHandler } from './middlewares/common/errorHandler';
+import { setCurrentUser } from './middlewares/common/rbacHandler';
 // importing routers
-const authRouter = require('./router/auth.router');
-const cafeRouter = require('./router/cafe.router');
-const newsfeedRouter = require('./router/newsfeed.router');
-const commentRouter = require('./router/comment.router');
-const messengerRouter = require('./router/messenger.router');
+import authRouter from './router/auth.router';
+import cafeRouter from './router/cafe.router';
+import newsfeedRouter from './router/newsfeed.router';
+import commentRouter from './router/comment.router';
+// import messengerRouter from './router/messenger.router';
 // hub method imports
-const socketConnection = require('./hub/socket-connection');
+// import socketConnection from './hub/socket-connection';
 
 // initialize app & server
 const app = express();
@@ -28,8 +28,8 @@ dotenv.config();
 // database connection
 mongoose
     .connect(config.mongoConnectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
     })
     .then(() => {
         console.log('===> database successfully connected');
@@ -75,11 +75,9 @@ app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
 // web socket connection
-socketConnection(server);
+// socketConnection(server);
 
 // listen to server
 server.listen(config.port, () => {
     console.log(`===> app listening to port ${config.port}`);
 });
-
-// export = {};

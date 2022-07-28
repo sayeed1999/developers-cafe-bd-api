@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 
-const {
+import {
     getAll,
     getById,
     insertOne,
     findByIdAndUpdate,
     giveProductRating,
-} = require('../controllers/cafe.controller');
+} from '../controllers/cafe.controller';
 
 const router = express.Router();
 
@@ -16,5 +16,4 @@ router.post('/', insertOne);
 router.put('/:id', findByIdAndUpdate);
 router.post('/:id/rating', giveProductRating);
 
-module.exports = router;
-export = {};
+export default router;

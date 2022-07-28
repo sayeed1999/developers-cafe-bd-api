@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const config = require('../../config');
-const User = require('../../models/Person.model');
+import jwt from 'jsonwebtoken';
+import config from '../../config';
+import User from '../../models/Person.model';
 
 // middleware to set user object if jwt token present in header
 const setCurrentUser = async (req, res, next) => {
@@ -38,9 +38,7 @@ const requireRole = (role) => (req, res, next) => {
     }
 };
 
-module.exports = {
+export {
     setCurrentUser,
     requireRole,
 };
-
-export = {};

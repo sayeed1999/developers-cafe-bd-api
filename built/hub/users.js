@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUsersInRoom = exports.getUser = exports.removeUser = exports.addUser = void 0;
 const users = [];
 const addUser = ({ id, name, room }) => {
     const _name = name.trim().toLowerCase();
@@ -11,6 +13,7 @@ const addUser = ({ id, name, room }) => {
     }
     return { user };
 };
+exports.addUser = addUser;
 const removeUser = (id) => {
     const index = users.findIndex((x) => x.id === id);
     if (index !== -1) {
@@ -19,6 +22,7 @@ const removeUser = (id) => {
     }
     return { error: 'Cannot find user to remove' };
 };
+exports.removeUser = removeUser;
 const getUser = (id) => {
     const user = users.find((x) => x.id === id);
     if (user) {
@@ -26,15 +30,10 @@ const getUser = (id) => {
     }
     return { error: 'User not found' };
 };
+exports.getUser = getUser;
 const getUsersInRoom = (room) => {
     const usersInRoom = users.find((x) => x.room === room.trim().toLowerCase());
     return { users: usersInRoom };
 };
-module.exports = {
-    addUser,
-    removeUser,
-    getUser,
-    getUsersInRoom,
-};
-module.exports = {};
+exports.getUsersInRoom = getUsersInRoom;
 //# sourceMappingURL=users.js.map

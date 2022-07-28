@@ -1,14 +1,18 @@
 "use strict";
-const jwt = require('jsonwebtoken');
-const config = require('../../config');
-const User = require('../../models/Person.model');
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.requireRole = exports.setCurrentUser = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const config_1 = __importDefault(require("../../config"));
 // middleware to set user object if jwt token present in header
 const setCurrentUser = async (req, res, next) => {
     if (req.headers && req.headers.authorization) {
         const authorization = req.headers.authorization.split(' ')[1];
         let decoded;
         try {
-            decoded = jwt.verify(authorization, config.jwt.secret);
+            decoded = jsonwebtoken_1.default.verify(authorization, config_1.default.jwt.secret);
         }
         catch (e) {
             return next();
@@ -25,6 +29,7 @@ const setCurrentUser = async (req, res, next) => {
     }
     next();
 };
+exports.setCurrentUser = setCurrentUser;
 // auth guard to protect routes that need authentication
 const requireRole = (role) => (req, res, next) => {
     if (req.user.role && role.includes(req.user.role)) {
@@ -38,9 +43,5 @@ const requireRole = (role) => (req, res, next) => {
         });
     }
 };
-module.exports = {
-    setCurrentUser,
-    requireRole,
-};
-module.exports = {};
+exports.requireRole = requireRole;
 //# sourceMappingURL=rbacHandler.js.map
