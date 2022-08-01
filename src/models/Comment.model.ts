@@ -30,7 +30,8 @@ const commentSchema = new mongoose.Schema<any>(
 
 const Comment = mongoose.model('Comment', commentSchema);
 
+export default Comment;
+
 export {
-  Comment,
   commentSchema,
 };

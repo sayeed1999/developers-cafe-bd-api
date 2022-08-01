@@ -26,13 +26,15 @@ const server = http.createServer(app);
 dotenv.config();
 
 // database connection
+let db: any; // db instance
 mongoose
-    .connect(config.mongoConnectionString, {
+    .connect(config.connectionString, {
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
     })
-    .then(() => {
+    .then(res => {
         console.log('===> database successfully connected');
+        db = res.connection.db;
     })
     .catch((err) => {
         console.log('===> db connection error: ', err.message);

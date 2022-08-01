@@ -3,7 +3,7 @@ import { check, validationResult } from 'express-validator';
 import createError from 'http-errors';
 
 // internal imports
-import User from '../../models/Person.model';
+import User from '../../models/person.model';
 
 // add user
 const addUserValidators = [

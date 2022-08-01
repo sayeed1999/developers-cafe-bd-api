@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 
-import Post from '../models/Post.model';
+import Post from '../models/post.model';
 
 async function getAll(req, res, next) {
     try {

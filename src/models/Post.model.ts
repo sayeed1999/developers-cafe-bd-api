@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { commentSchema } from './Comment.model';
+import { commentSchema } from './comment.model';
 
 const postSchema = new mongoose.Schema(
   {

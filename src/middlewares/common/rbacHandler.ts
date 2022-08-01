@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../../config';
-import User from '../../models/Person.model';
+import User from '../../models/person.model';
 
 // middleware to set user object if jwt token present in header
 const setCurrentUser = async (req, res, next) => {

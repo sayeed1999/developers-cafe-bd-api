@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import Post from '../models/Post.model';
+import Post from '../models/post.model';
 
 async function insertOne(req, res, next) {
     const fullUrl = req.originalUrl.split('/');

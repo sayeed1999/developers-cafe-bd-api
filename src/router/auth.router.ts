@@ -4,11 +4,11 @@ import express from 'express';
 // internal imports
 import {
     getUsers,
-    getById,
+    getUserById,
     getCurrentUser,
     deleteUser,
-    signup,
-    login,
+    signupUser,
+    loginUser,
 } from '../controllers/user.controller';
 
 import {
@@ -25,9 +25,9 @@ router.get('/users', requireRole('admin'), getUsers);
 router.delete('/users/:id', requireRole('admin'), deleteUser);
 
 // general routes
-router.get('/users/:id', getById);
+router.get('/users/:id', getUserById);
 router.post('/get-current-user', getCurrentUser);
-router.post('/signup', addUserValidators, addUserValidationHandler, signup);
-router.post('/login', login);
+router.post('/signup', addUserValidators, addUserValidationHandler, signupUser);
+router.post('/login', loginUser);
 
 export default router;
