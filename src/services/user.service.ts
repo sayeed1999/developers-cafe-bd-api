@@ -8,7 +8,7 @@ import User from '../models/person.model';
 import config from '../config';
 import BaseService from './base.service';
 
-export default class UserService extends BaseService<typeof User> {
+export default class UserService extends BaseService {
 
     constructor() {
         super(User);
@@ -20,7 +20,7 @@ export default class UserService extends BaseService<typeof User> {
             ...user,
             password: hashedPassword,
         });
-        await this.create(newUser);
+        await this.insertOne(newUser);
         return newUser;
     };
     

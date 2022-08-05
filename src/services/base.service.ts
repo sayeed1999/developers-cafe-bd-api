@@ -1,6 +1,8 @@
 import { Model } from "mongoose";
 
-export default class BaseService<T> {
+import Pagination from "../interfaces/pagination.interface";
+
+export default class BaseService {
 
     private readonly Model: Model<any>;
 
@@ -8,8 +10,11 @@ export default class BaseService<T> {
         this.Model = Model;
     }
 
-    getAll = async () => {
-        const users = await this.Model.find();
+    getAll = async (args?: Pagination) => {
+        const users = await this.Model.find()
+                                      .sort({ createdAt: -1 }) // order by desc
+                                      .limit(args.size)
+                                      .skip(args.size * (args.page - 1));
         return users;
     };
 
@@ -18,7 +23,23 @@ export default class BaseService<T> {
         return user;
     };
 
-    create = async (entity: any) => {
+    insertOne = async (entity: any) => {
+        await this.Model.insertMany([ entity ]);
+        // await entity.save();
+        return entity;
+    }
+
+    insertMany = async (entities: any[]) => {
+        await this.Model.insertMany(entities);
+        return entities;
+    }
+
+    findByIdAndUpdate = async (id: number, entity: any) => {
+        const data = await this.Model.findByIdAndUpdate(id, entity);
+        return data;
+    }
+
+    addOrUpdate = async (entity: any)  => {
         await entity.save();
         return entity;
     }

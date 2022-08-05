@@ -1,11 +1,7 @@
 // external imports
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import createError from 'http-errors';
 
 // internal imports
-import User from '../models/person.model';
-import config from '../config';
 import UserService from '../services/user.service';
 
 const userService = new UserService(); // DI not used
