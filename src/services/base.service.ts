@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, ObjectId } from "mongoose";
 
 import Pagination from "../interfaces/pagination.interface";
 
@@ -18,7 +18,7 @@ export default class BaseService {
         return users;
     };
 
-    getById = async (id: number) => {
+    getById = async (id: ObjectId) => {
         const user = await this.Model.findById(id);
         return user;
     };
@@ -34,7 +34,7 @@ export default class BaseService {
         return entities;
     }
 
-    findByIdAndUpdate = async (id: number, entity: any) => {
+    findByIdAndUpdate = async (id: ObjectId, entity: any) => {
         const data = await this.Model.findByIdAndUpdate(id, entity);
         return data;
     }
@@ -44,7 +44,7 @@ export default class BaseService {
         return entity;
     }
 
-    deleteById = async (id: number) => {
+    deleteById = async (id: ObjectId) => {
         await this.Model.findByIdAndDelete({ _id: id });
     };
 

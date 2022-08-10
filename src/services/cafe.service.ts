@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import Product from "../models/product.model";
 import BaseService from "./base.service";
 
@@ -7,7 +8,7 @@ export default class CafeService extends BaseService {
         super(Product);
     }
 
-    giveProductRating = async (userid: number, productId: number, star: number) => {
+    giveProductRating = async (userid: ObjectId, productId: ObjectId, star: number) => {
         const product = await this.getById(productId);
         const index = product.ratings.findIndex((x) => x.userid === userid);
         

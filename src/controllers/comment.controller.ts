@@ -6,7 +6,7 @@ const commentService = new CommentService();
 
 async function insertOne(req, res, next) {
     const fullUrl = req.originalUrl.split('/');
-    const postId = +fullUrl[fullUrl.length - 2];
+    const postId = fullUrl[fullUrl.length - 2];
     const comment = req.body;
     
     try {

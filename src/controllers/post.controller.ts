@@ -18,7 +18,7 @@ async function getAll(req, res, next) {
 async function getById(req, res, next) {
     const { id } = req.params;
     try {
-        const data = await postService.getById(+id);
+        const data = await postService.getById(id);
         if (data === null) {
           throw createError(404, 'post not found!');
         }
@@ -41,7 +41,7 @@ async function insertOne(req, res, next) {
 
 async function findByIdAndUpdate(req, res, next) {
   try {
-      const data = await postService.findByIdAndUpdate(+req.params.id, req.body);
+      const data = await postService.findByIdAndUpdate(req.params.id, req.body);
       res.status(200).json({ data });
   } catch (err) {
       next(err);

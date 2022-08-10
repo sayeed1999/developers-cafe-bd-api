@@ -17,7 +17,7 @@ async function getAll(req, res, next) {
 async function getById(req, res, next) {
     const { id } = req.params.id;
     try {
-        const data = await cafeService.getById(+id);
+        const data = await cafeService.getById(id);
         if (data === null) {
           throw createError(404, 'product not found!');
         }
@@ -38,7 +38,7 @@ async function insertOne(req, res, next) {
 
 async function findByIdAndUpdate(req, res, next) {
   try {
-      const data = await cafeService.findByIdAndUpdate(+req.params.id, req.body);
+      const data = await cafeService.findByIdAndUpdate(req.params.id, req.body);
       res.status(200).json({ data });
   } catch (err) {
       next(err);
@@ -51,7 +51,7 @@ async function giveProductRating(req, res, next) {
     const productId = req.params.id;
     const { star } = req.body;
 
-    const updated = await cafeService.giveProductRating(+userid, +productId, +star);
+    const updated = await cafeService.giveProductRating(userid, productId, +star);
 
     res.status(200).json({
       data: updated,
