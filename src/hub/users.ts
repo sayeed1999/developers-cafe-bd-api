@@ -1,6 +1,6 @@
 const users = [];
 
-const addUser = ({ id, name, room }) => { // returns  { error, user }
+const addUser = ({ id, name, room }): { error, user } => {
     const _name = name.trim().toLowerCase();
     const _room = room.trim().toLowerCase();
 
@@ -9,27 +9,27 @@ const addUser = ({ id, name, room }) => { // returns  { error, user }
 
     const user = { id, name: _name, room: _room };
     if (!existingUser) { users.push(user); }
-    return { user };
+    return { error: null, user: user };
 };
 
-const removeUser = (id) => { // returns  { error, user }
+const removeUser = (id): { error, user } => {
     const index = users.findIndex((x) => x.id === id);
     if (index !== -1) {
         const removedUser = users.splice(index, 1)[0];
-        return { user: removedUser };
+        return { user: removedUser, error: null };
     }
-    return { error: 'Cannot find user to remove' };
+    return { error: 'Cannot find user to remove', user: null };
 };
 
-const getUser = (id) => { // returns  { error, user }
+const getUser = (id): { error, user } => { // returns  { error, user }
     const user = users.find((x) => x.id === id);
-    if (user) { return { user }; }
-    return { error: 'User not found' };
+    if (user) { return { user, error: null }; }
+    return { error: 'User not found', user: null };
 };
 
-const getUsersInRoom = (room) => { // returns  { error, users }
+const getUsersInRoom = (room): { error, users } => { // returns  { error, users }
     const usersInRoom = users.find((x) => x.room === room.trim().toLowerCase());
-    return { users: usersInRoom };
+    return { error: null, users: usersInRoom };
 };
 
 export {

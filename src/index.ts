@@ -18,7 +18,7 @@ import newsfeedRouter from './router/newsfeed.router';
 import commentRouter from './router/comment.router';
 // import messengerRouter from './router/messenger.router';
 // hub method imports
-// import socketConnection from './hub/socket-connection';
+import socketConnection from './hub/socket-connection';
 
 // initialize app & server
 const app = express();
@@ -52,9 +52,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// set view engine
-// app.set('view engine', 'ejs');
-
 // set static folder
 // app.use(express.static(path.join(__dirname, 'public')));
 
@@ -77,7 +74,7 @@ app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
 // web socket connection
-// socketConnection(server);
+socketConnection(server);
 
 // listen to server
 server.listen(config.port, () => {
