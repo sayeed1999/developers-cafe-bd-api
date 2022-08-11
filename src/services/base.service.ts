@@ -25,8 +25,9 @@ export default class BaseService {
         return users;
     };
 
-    getById = async (id: ObjectId) => {
+    getById = async (id: ObjectId | string) => {
         const user = await this.Model.findById(id);
+        console.log(user)
         return user;
     };
 
