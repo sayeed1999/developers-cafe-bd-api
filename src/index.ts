@@ -18,7 +18,6 @@ import commentRouter from './router/comment.router';
 // import messengerRouter from './router/messenger.router';
 // hub method imports
 import socketConnection from './hub/socket-connection';
-import RedisCacheService from './services/redis-cache.service';
 
 // initialize app & server
 const app = express();
@@ -30,6 +29,7 @@ const redisClient = createClient();
 redisClient.connect()
     .then(() => {
         console.log('===> Redis Client connected successfully');
+        global.cacheClient = redisClient;
     })
     .catch(err => {
         console.log('===> Could not connect Redis client. Try restarting server..', err);
@@ -79,7 +79,7 @@ app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
 // web socket connection
-socketConnection(server, redisClient);
+socketConnection(server);
 
 // listen to server
 server.listen(config.port, () => {

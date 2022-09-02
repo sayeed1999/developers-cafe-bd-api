@@ -7,7 +7,7 @@ import {
 } from './users';
 
 // server is of type http.Server
-const socketConnection = (server, redisClient) => {
+const socketConnection = (server) => {
     const io = new Server(server, {
         cors: {
             origin: ['http://localhost:3000', 'https://developers-cafe-bd.vercel.app'],

@@ -4,8 +4,8 @@ export default class RedisCacheService {
     
     private readonly _client: RedisClientType;
 
-    constructor(client: RedisClientType) {
-        this._client = client;
+    constructor() {
+        this._client = global.redisClient;
     }
 
     set = async (key: string, value: any) => {
