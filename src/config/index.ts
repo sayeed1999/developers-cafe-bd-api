@@ -24,7 +24,7 @@ const config: Config = {
 
     },
     redis: {
-
+        port: process.env.REDIS_PORT,
     },
     email: {
 

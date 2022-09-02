@@ -3,9 +3,8 @@ import express from 'express';
 import http from 'http';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import path from 'path';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { createClient } from 'redis';
 
 // internal imports
 import config from './config';
@@ -19,13 +18,24 @@ import commentRouter from './router/comment.router';
 // import messengerRouter from './router/messenger.router';
 // hub method imports
 import socketConnection from './hub/socket-connection';
+import RedisCacheService from './services/redis-cache.service';
 
 // initialize app & server
 const app = express();
 const server = http.createServer(app);
 dotenv.config();
 
-// database connection
+// redis client connection
+const redisClient = createClient();
+redisClient.connect()
+    .then(() => {
+        console.log('===> Redis Client connected successfully');
+    })
+    .catch(err => {
+        console.log('===> Could not connect Redis client. Try restarting server..', err);
+    });
+
+// mongo database connection
 let db: any; // db instance
 mongoose
     .connect(config.connectionString, {
@@ -52,12 +62,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// set static folder
-// app.use(express.static(path.join(__dirname, 'public')));
-
-// parse cookie
-app.use(cookieParser(config.cookieSecret));
-
+// setup middlewares before routes
 app.use(setCurrentUser);
 
 // routing setup
@@ -74,7 +79,7 @@ app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
 // web socket connection
-socketConnection(server);
+socketConnection(server, redisClient);
 
 // listen to server
 server.listen(config.port, () => {

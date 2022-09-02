@@ -7,7 +7,7 @@ import {
 } from './users';
 
 // server is of type http.Server
-const socketConnection = (server) => {
+const socketConnection = (server, redisClient) => {
     const io = new Server(server, {
         cors: {
             origin: ['http://localhost:3000', 'https://developers-cafe-bd.vercel.app'],
@@ -39,6 +39,8 @@ const socketConnection = (server) => {
             if (error) return callback(error);
             // broadcast to every socket connections in the room
             io.to(user.room).emit('message', { user: user.name, text: message });
+            // save message to redis cache
+            
             return callback();
         });
 
