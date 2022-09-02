@@ -17,7 +17,7 @@ import newsfeedRouter from './router/newsfeed.router';
 import commentRouter from './router/comment.router';
 // import messengerRouter from './router/messenger.router';
 // hub method imports
-import socketConnection from './hub/socket-connection';
+import socketConnection from './socket/socket-connection';
 
 // initialize app & server
 const app = express();

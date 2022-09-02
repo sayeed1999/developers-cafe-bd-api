@@ -1,13 +1,13 @@
 const users = [];
 
-const addUser = ({ id, name, room }): { error, user } => {
-    const _name = name.trim().toLowerCase();
+const addUser = ({ id, username, room }): { error, user } => {
+    const _name = username.trim().toLowerCase();
     const _room = room.trim().toLowerCase();
 
     // a user may enter from mulitple devices at a time but id will be different..
     const existingUser = users.find((user) => user.id === id && user.name === _name && user.room === _room);
 
-    const user = { id, name: _name, room: _room };
+    const user = { id, username: _name, room: _room };
     if (!existingUser) { users.push(user); }
     return { error: null, user: user };
 };

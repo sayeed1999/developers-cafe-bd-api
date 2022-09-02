@@ -20,9 +20,9 @@ const socketConnection = (server) => {
     io.on('connection', (socket) => {
         console.log('a user is connected');
 
-        socket.on('join', ({ name, room }, callback) => {
-            console.log(`${name} has joined on ${room}`);
-            const { error, user } = addUser({ id: socket.id, name, room });
+        socket.on('join', ({ username, room }, callback) => {
+            console.log(`${username} has joined on ${room}`);
+            const { error, user } = addUser({ id: socket.id, username, room });
             if (error) return callback(error);
             // joins a specific room!
             socket.join(user.room);
@@ -38,7 +38,7 @@ const socketConnection = (server) => {
             const { user, error } = getUser(socket.id);
             if (error) return callback(error);
             // broadcast to every socket connections in the room
-            io.to(user.room).emit('message', { user: user.name, text: message });
+            io.to(user.room).emit('message', { username: user.name, message: message });
             // save message to redis cache
             
             return callback();
